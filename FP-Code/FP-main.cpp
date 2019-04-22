@@ -1,10 +1,9 @@
 /**
-L07: Game of War
-enhancements by <cruzg>
-Purpose: To create a War class that would work similar to the card game War.
-The War class needed to be constructed using only stacks, queues, and deques.
-This is the work of the authors: cruzg.
-ASCII sign found at http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 */
+Final Project: Trees
+Team name: <GEE>
+Teammates: Guillermo Cruz, Elaheh Jamali and Emely Alfaro 
+Purpose: To use the base code about trees in order to create a game for a guessing name. 
+Starting code taken from: http://cs.berea.edu/cppds/Trees/SearchTreeImplementation.html*/
 
 
 #include <iostream>
@@ -380,17 +379,17 @@ int main() {
 	while (x == true) {
 		cout << "Is your number " << currentnode << " (yes or no)?" << endl;
 		cin >> answer;
-		if (answer == "yes") {
+		if (answer == "yes" || answer == "Yes") {
 			x = false;
 		}
-		else if (answer == "no") {
+		else if (answer == "no" || answer == "No") {
 			cout << "Is your number higher or lower than " << currentnode << " (high or low)?" << endl;
 			cin >> answertwo;
-			if (answertwo == "high") {
+			if (answertwo == "high" || answertwo == "High") {
 				int rightnode = mytree->get_right(currentnode);
 				currentnode = rightnode;
 			}
-			else if (answertwo == "low") {
+			else if (answertwo == "low" || answertwo == "Low") {
 				int leftnode = mytree->get_left(currentnode);
 				currentnode = leftnode;
 			}
