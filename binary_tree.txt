@@ -1,0 +1,31 @@
+Does it fly? 22
+Does it live in the water? 12
+Is it an exotic animal? 4
+Is it popular on campus? 3
+Is it a rabbit? 1
+Is it a squirrel? 2
+Does it have stripes? 8
+Does it have a long neck? 6
+Is it a Panda? 5
+Is it a giraffe? 7
+Is it an herbivore? 10
+Is it a tiger? 9
+Zebra? 11
+Does it live in cold weather? 18
+Does it have eight arms? 16
+Does it have legs? 14
+Is it a baby shark? 13
+Is it an Alligator? 15
+Is it an Octopus? 17
+Does it appear in the movie “Happy Feet”? 20
+Is it a Sea Lion? 19
+Is it a penguin? 21
+Does it have long legs? 27
+Is it a National Emblem? 25
+Do old people feed this animal? 23
+Is it a duck? 24
+Is it a Bald Eagle? 26
+Does it deliver Babies? 30
+Is it pink? 28
+Is it a Flamingo? 29
+Is it a Stork? 31
