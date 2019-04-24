@@ -288,31 +288,40 @@ public:
 		int linecount = 0;
 		vector <string> questionvect;
 		vector <int> numbersvect;
-		int x = numbersvect.size();
+		//int x = numbersvect.size();
+		questionvect.reserve(32);
+		numbersvect.reserve(32);
 
+		
 
 		questions.open(questions_filename);
-		numbers.open(number_filename);
+		
 
-		if (!questions || !numbers) {
+		numbers.open(number_filename);
+		
+
+		if (!questions.is_open() || !numbers.is_open()) {
 			cout << " Error opening file. " << endl;
 		}
-		while (getline(questions, line)) {// Reading file until the end is reached or an error occurs
-			for (unsigned int i = 0; i < line.length(); ++i) {
-				questionvect.push_back(line[i]);
-			}
+		cout << "I am here";
+		/*for (unsigned int i = 0; i < 31; ++i) {
+			getline(questions, line);
+			questionvect[i];
 		}
-		while (getline(numbers, line)) {// Reading file until the end is reached or an error occurs
-			for (unsigned int i = 0; i < line.length(); ++i) {
-				numbersvect.push_back(line[i]);
-			}
-		}
-		while (x != 0) {
-			int i = 0;
-			int num = numbersvect[i];
-			string ques = questionvect[i];
-			put(num, ques);
-		}
+
+		for (unsigned int i = 0; i < 31; ++i) {
+			getline(numbers, line);
+			numbersvect[i];
+		}*/
+
+		//while (x != 0) {
+		//	int i = 0;
+		//	int num = numbersvect[i];
+		//	string ques = questionvect[i];
+		//	put(num, ques);
+		//}
+		questions.close();
+		numbers.close();
 	}
 
 
@@ -321,13 +330,11 @@ public:
 int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
-	mytree->put(3, "red");
-	mytree->put(4, "blue");
-	mytree->put(6, "yellow");
-	mytree->put(2, "at");
+	mytree->fill_tree("questions_filename.txt", "numbers_filename.txt");
 
-	cout << mytree->get(6) << endl;
-	cout << mytree->get(2) << endl;
+
+
+
 	cin.get();
 	return 0;
 }
