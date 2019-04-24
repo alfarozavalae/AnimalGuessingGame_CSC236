@@ -1,15 +1,11 @@
-/**
-Final Project: Trees
-Team name: <GEE>
-Teammates: Guillermo Cruz, Elaheh Jamali and Emely Alfaro 
-Purpose: To use the base code about trees in order to create a game for a guessing name. 
-Starting code taken from: http://cs.berea.edu/cppds/Trees/SearchTreeImplementation.html*/
-
-
 #include <iostream>
 #include <cstdlib>
 #include <cstddef>
 #include <string>
+#include <fstream>
+#include <vector>
+#include "stdlib.h" // for the system command
+
 using namespace std;
 
 
@@ -17,14 +13,15 @@ class TreeNode {
 
 public:
 	int key;
-	int payload;
+	string animal_name;
 	TreeNode *leftChild;
 	TreeNode *rightChild;
 	TreeNode *parent;
 
-	TreeNode(int key, int val, TreeNode *parent = NULL, TreeNode *left = NULL, TreeNode *right = NULL) {
+
+	TreeNode(int key, string val, TreeNode *parent = NULL, TreeNode *left = NULL, TreeNode *right = NULL) {
 		this->key = key;
-		this->payload = val;
+		this->animal_name = val;
 		this->leftChild = left;
 		this->rightChild = right;
 		this->parent = parent;
@@ -121,9 +118,9 @@ public:
 		return current;
 	}
 
-	void replaceNodeData(int key, int value, TreeNode *lc = NULL, TreeNode *rc = NULL) {
+	void replaceNodeData(int key, string value, TreeNode *lc = NULL, TreeNode *rc = NULL) {
 		this->key = key;
-		this->payload = value;
+		this->animal_name = value;
 		this->leftChild = lc;
 		this->rightChild = rc;
 		if (this->hasLeftChild()) {
@@ -143,7 +140,7 @@ private:
 	TreeNode *root;
 	int size;
 
-	void _put(int key, int val, TreeNode *currentNode) {
+	void _put(int key, string val, TreeNode *currentNode) {
 		if (key < currentNode->key) {
 			if (currentNode->hasLeftChild()) {
 				this->_put(key, val, currentNode->leftChild);
@@ -172,40 +169,8 @@ private:
 		else if (key < currentNode->key) {
 			return this->_get(key, currentNode->leftChild);
 		}
-		else if (key > currentNode->key) {
+		else {
 			return this->_get(key, currentNode->rightChild);
-		}
-	}
-
-	TreeNode  *_getleft(int key, TreeNode *currentNode) {
-		if (!currentNode) {
-			return NULL;
-		}
-		else if (currentNode->key == key) {
-			TreeNode *leftNode = currentNode->leftChild;
-			return leftNode;
-		}
-		else if (key > currentNode->key) {
-			return this->_getleft(key, currentNode->rightChild);
-		}
-		else if (key < currentNode->key) {
-			return this->_getleft(key, currentNode->leftChild);
-		}
-	}
-
-	TreeNode  *_getright(int key, TreeNode *currentNode) {
-		if (!currentNode) {
-			return NULL;
-		}
-		else if (currentNode->key == key) {
-			TreeNode *rightNode = currentNode->rightChild;
-			return rightNode;
-		}
-		else if (key > currentNode->key) {
-			return this->_getright(key, currentNode->rightChild);
-		}
-		else if (key < currentNode->key) {
-			return this->_getright(key, currentNode->leftChild);
 		}
 	}
 
@@ -219,7 +184,7 @@ public:
 		return this->size;
 	}
 
-	void put(int key, int val) {
+	void put(int key, string val) {
 		if (this->root) {
 			this->_put(key, val, this->root);
 		}
@@ -229,44 +194,11 @@ public:
 		this->size = this->size + 1;
 	}
 
-	int get(int key) {
+	string get(int key) {
 		if (this->root) {
 			TreeNode *res = this->_get(key, this->root);
 			if (res) {
-				return res->payload;
-			}
-			else {
-				return 0;
-			}
-		}
-		else {
-			return 0;
-		}
-	}
-
-	int get_left(int key) {
-		// New method we will use to get the left node
-		// We need to access the left child, and then call _get()
-		if (this->root) {
-			TreeNode *res = this->_getleft(key, this->root);
-			if (res) {
-				return res->payload;
-			}
-			else {
-				return 0;
-			}
-		}
-		else {
-			return 0;
-		}
-	}
-
-	int get_right(int key) {
-		// New method we will use to get the right node
-		if (this->root) {
-			TreeNode *res = this->_getright(key, this->root);
-			if (res) {
-				return res->payload;
+				return res->animal_name;
 			}
 			else {
 				return 0;
@@ -310,7 +242,7 @@ public:
 			TreeNode *succ = currentNode->findSuccessor();
 			succ->spliceOut();
 			currentNode->key = succ->key;
-			currentNode->payload = succ->payload;
+			currentNode->animal_name = succ->animal_name;
 		}
 		else { // this node has one child
 			if (currentNode->hasLeftChild()) {
@@ -324,7 +256,7 @@ public:
 				}
 				else {
 					currentNode->replaceNodeData(currentNode->leftChild->key,
-						currentNode->leftChild->payload,
+						currentNode->leftChild->animal_name,
 						currentNode->leftChild->leftChild,
 						currentNode->leftChild->rightChild);
 
@@ -341,64 +273,61 @@ public:
 				}
 				else {
 					currentNode->replaceNodeData(currentNode->rightChild->key,
-						currentNode->rightChild->payload,
+						currentNode->rightChild->animal_name,
 						currentNode->rightChild->leftChild,
 						currentNode->rightChild->rightChild);
 				}
 			}
 		}
 	}
+	void fill_tree(string questions_filename, string number_filename)
+	{
+		ifstream questions(questions_filename);
+		ifstream numbers(number_filename);
+		string line;
+		int linecount = 0;
+		vector <string> questionvect;
+		vector <int> numbersvect;
+		int x = numbersvect.size();
+
+
+		questions.open(questions_filename);
+		numbers.open(number_filename);
+
+		if (!questions || !numbers) {
+			cout << " Error opening file. " << endl;
+		}
+		while (getline(questions, line)) {// Reading file until the end is reached or an error occurs
+			for (unsigned int i = 0; i < line.length(); ++i) {
+				questionvect.push_back(line[i]);
+			}
+		}
+		while (getline(numbers, line)) {// Reading file until the end is reached or an error occurs
+			for (unsigned int i = 0; i < line.length(); ++i) {
+				numbersvect.push_back(line[i]);
+			}
+		}
+		while (x != 0) {
+			int i = 0;
+			int num = numbersvect[i];
+			string ques = questionvect[i];
+			put(num, ques);
+		}
+	}
+
+
 };
 
 int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
-	mytree->put(8, 8);
-	mytree->put(4, 4);
-	mytree->put(12, 12);
-	mytree->put(2, 2);
-	mytree->put(6, 6);
-	mytree->put(10, 10);
-	mytree->put(14, 14);
-	mytree->put(1, 1);
-	mytree->put(3, 3);
-	mytree->put(5, 5);
-	mytree->put(7, 7);
-	mytree->put(9, 9);
-	mytree->put(11, 11);
-	mytree->put(13, 13);
-	mytree->put(15, 15);
+	mytree->put(3, "red");
+	mytree->put(4, "blue");
+	mytree->put(6, "yellow");
+	mytree->put(2, "at");
 
-	cout << "Let's play the number guessing game!" << endl;
-	cout << "\nThink of a number between 1-15. Then, using yes or no question we'll guess your number!" << endl;
-	bool x = true;
-	string answer = "something";
-	string answertwo = "something";
-	int currentnode = 8;
-	char stopme;
-	while (x == true) {
-		cout << "Is your number " << currentnode << " (yes or no)?" << endl;
-		cin >> answer;
-		if (answer == "yes" || answer == "Yes") {
-			x = false;
-		}
-		else if (answer == "no" || answer == "No") {
-			cout << "Is your number higher or lower than " << currentnode << " (high or low)?" << endl;
-			cin >> answertwo;
-			if (answertwo == "high" || answertwo == "High") {
-				int rightnode = mytree->get_right(currentnode);
-				currentnode = rightnode;
-			}
-			else if (answertwo == "low" || answertwo == "Low") {
-				int leftnode = mytree->get_left(currentnode);
-				currentnode = leftnode;
-			}
-		}
-	}
-
-	//cin.get();
-	cout << "Wow, we're good. That'll be 20 Berea Bucks!" << endl;
-	cin >> stopme;
-
+	cout << mytree->get(6) << endl;
+	cout << mytree->get(2) << endl;
+	cin.get();
 	return 0;
 }
