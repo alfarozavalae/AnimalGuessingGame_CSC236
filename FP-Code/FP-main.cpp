@@ -299,24 +299,23 @@ public:
 			cout << " Error opening file. " << endl;
 		}
 
-		for (unsigned int i = 0; i < 31; ++i) {
+		for (unsigned int i = 0; i <= 31; ++i) {
 			getline(questions, line);
 			//cout << line << endl;
 			questionvect.push_back(line);
 		}
 
-		for (unsigned int i = 0; i < 31; ++i) {
+		for (unsigned int i = 0; i <= 31; ++i) {
 			numbers >> readint;
 			//cout << readint << endl;
 			numbersvect.push_back(readint);
 		}
 
-		//while (x != 0) {
-		//	int i = 0;
-		//	int num = numbersvect[i];
-		//	string ques = questionvect[i];
-		//	put(num, ques);
-		//}
+		for (unsigned int i = 0; i <= 31; ++i) {
+			int num = numbersvect[i];
+			string ques = questionvect[i];
+			put(num, ques);
+		}
 		questions.close();
 		numbers.close();
 	}
@@ -328,7 +327,7 @@ int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
 	mytree->fill_tree("questions_filename.txt", "numbers_filename.txt");
-
+	cout << mytree << endl;
 
 
 
