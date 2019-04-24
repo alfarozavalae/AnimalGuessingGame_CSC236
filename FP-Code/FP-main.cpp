@@ -285,6 +285,7 @@ public:
 		ifstream questions(questions_filename);
 		ifstream numbers(number_filename);
 		string line;
+		int readint;
 		int linecount = 0;
 		vector <string> questionvect;
 		vector <int> numbersvect;
@@ -292,27 +293,23 @@ public:
 		questionvect.reserve(32);
 		numbersvect.reserve(32);
 
-		
 
-		questions.open(questions_filename);
-		
-
-		numbers.open(number_filename);
-		
 
 		if (!questions.is_open() || !numbers.is_open()) {
 			cout << " Error opening file. " << endl;
 		}
-		cout << "I am here";
-		/*for (unsigned int i = 0; i < 31; ++i) {
+
+		for (unsigned int i = 0; i < 31; ++i) {
 			getline(questions, line);
-			questionvect[i];
+			//cout << line << endl;
+			questionvect.push_back(line);
 		}
 
 		for (unsigned int i = 0; i < 31; ++i) {
-			getline(numbers, line);
-			numbersvect[i];
-		}*/
+			numbers >> readint;
+			//cout << readint << endl;
+			numbersvect.push_back(readint);
+		}
 
 		//while (x != 0) {
 		//	int i = 0;
