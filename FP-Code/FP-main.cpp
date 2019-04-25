@@ -291,7 +291,7 @@ public:
 	}
 	
 	void preorder(){
-		BinarySearchTree::preorder();
+		root.preorder();
 			}
 	
 	void fill_tree(string questions_filename, string number_filename)
