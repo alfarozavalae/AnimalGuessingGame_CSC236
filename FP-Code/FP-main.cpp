@@ -465,40 +465,6 @@ public:
 		questions.close();
 		numbers.close();
 	}
-
-
-	//void check_answer(TreeNode* node) {
-	//	int key_num = 22;
-	//	string node = get(key_num);
-	//	string answer = "";
-	//	bool leaf;
-	//	
-
-	//	cout << node << endl;
-	//	cin >> answer;
-
-	//	if (!node -> isLeaf()) {
-	//		if (answer == "yes" || answer == "Yes") {
-	//			node = mytree -> 
-	//		}
-	//		else if (answer == "no" || answer == "No") {
-	//			cout << "Is your number higher or lower than " << currentnode << " (high or low)?" << endl;
-	//			cin >> answertwo;
-	//			if (answertwo == "high" || answertwo == "High") {
-	//				int rightnode = mytree->get_right(currentnode);
-	//				currentnode = rightnode;
-	//			}
-	//			else if (answertwo == "low" || answertwo == "Low") {
-	//				int leftnode = mytree->get_left(currentnode);
-	//				currentnode = leftnode;
-	//			}
-	//		}
-	//	}
-	//}
-
-
-
-
 };
 
 int main() {
@@ -514,9 +480,11 @@ int main() {
 	string node = mytree->get(key_num);
 	string answer;
 	bool leaf = true;
-
-
+	vector <string> leaf_animals{"Zebra", "Flamingo", "Penguin","Rabbit", "Duck", "Squirrel", "Giraffe", "Shark", "Alligator", "Octopus", "Seal","Bald Eagle", "Stork","Panda", "Tiger"};
+	
 	while (leaf = true) {
+		//if(node in leaf_animals){
+		//stuff
 		cout << node << endl;
 		cin >> answer;
 		if (answer == "yes" || answer == "Yes") {
@@ -527,6 +495,7 @@ int main() {
 			node = mytree->get_left(key_num);
 			key_num = mytree->get_leftkey(key_num);
 		}
+
 	}
 	cin.get();
 	return 0;
