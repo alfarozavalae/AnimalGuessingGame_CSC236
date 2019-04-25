@@ -131,6 +131,15 @@ public:
 			this->rightChild->parent = this;
 		}
 	}
+	void preorder() {
+		cout << this->key << endl;
+		if (this->leftChild) {
+			this->leftChild->preorder();
+		}
+		if (this->rightChild) {
+			this->rightChild->preorder();
+		}
+	}
 };
 
 
@@ -280,6 +289,11 @@ public:
 			}
 		}
 	}
+	
+	void preorder(){
+		BinarySearchTree::preorder();
+			}
+	
 	void fill_tree(string questions_filename, string number_filename)
 	{
 		ifstream questions(questions_filename);
@@ -301,25 +315,26 @@ public:
 
 		for (unsigned int i = 0; i <= 31; ++i) {
 			getline(questions, line);
-			//cout << line << endl;
+			cout << line << endl;
 			questionvect.push_back(line);
 		}
 
 		for (unsigned int i = 0; i <= 31; ++i) {
 			numbers >> readint;
-			//cout << readint << endl;
+			cout << readint << endl;
 			numbersvect.push_back(readint);
 		}
 
 		for (unsigned int i = 0; i <= 31; ++i) {
 			int num = numbersvect[i];
 			string ques = questionvect[i];
-			put(num, ques);
+			put(num, ques );
+		
 		}
 		questions.close();
 		numbers.close();
 	}
-
+		
 
 };
 
@@ -327,10 +342,12 @@ int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
 	mytree->fill_tree("questions_filename.txt", "numbers_filename.txt");
+	//cout << mytree -> root << endl;
+	/*for (int i = 1, i < mytree.length, ++i);
 	cout << mytree << endl;
-
-
-
+	
+*/
+	mytree->preorder();
 	cin.get();
 	return 0;
 }
