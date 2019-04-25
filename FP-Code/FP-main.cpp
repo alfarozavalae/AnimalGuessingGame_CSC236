@@ -183,6 +183,38 @@ private:
 		}
 	}
 
+	TreeNode  *_getleft(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *leftNode = currentNode->leftChild;
+			return leftNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getleft(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getleft(key, currentNode->leftChild);
+		}
+	}
+
+	TreeNode  *_getright(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *rightNode = currentNode->rightChild;
+			return rightNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getright(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getright(key, currentNode->leftChild);
+		}
+	}
+
 public:
 	BinarySearchTree() {
 		this->root = NULL;
@@ -217,6 +249,40 @@ public:
 			return 0;
 		}
 	}
+
+	string get_left(int key) {
+		// New method we will use to get the left node
+		// We need to access the left child, and then call _get()
+		if (this->root) {
+			TreeNode *res = this->_getleft(key, this->root);
+			if (res) {
+				return res->animal_name;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
+	string get_right(int key) {
+		// New method we will use to get the right node
+		if (this->root) {
+			TreeNode *res = this->_getright(key, this->root);
+			if (res) {
+				return res->animal_name;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
 
 	void del(int key) {
 		if (this->size > 1) {
@@ -315,13 +381,13 @@ public:
 
 		for (unsigned int i = 0; i <= 31; ++i) {
 			getline(questions, line);
-			cout << line << endl;
+			//cout << line << endl;
 			questionvect.push_back(line);
 		}
 
 		for (unsigned int i = 0; i <= 31; ++i) {
 			numbers >> readint;
-			cout << readint << endl;
+			//cout << readint << endl;
 			numbersvect.push_back(readint);
 		}
 
@@ -334,8 +400,6 @@ public:
 		questions.close();
 		numbers.close();
 	}
-		
-
 };
 
 int main() {
@@ -347,7 +411,13 @@ int main() {
 	cout << mytree << endl;
 	
 */
-	mytree->preorder();
+	int num = 4;
+	string x = mytree->get(num);
+	string y = mytree->get_left(num);
+	string z = mytree->get_right(num);
+	cout << x << endl;
+	cout << y << endl;
+	cout << z << endl;
 	cin.get();
 	return 0;
 }
