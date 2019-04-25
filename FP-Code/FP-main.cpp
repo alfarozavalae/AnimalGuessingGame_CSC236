@@ -215,6 +215,38 @@ private:
 		}
 	}
 
+	TreeNode  *_getleftkey(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *leftNode = currentNode->leftChild;
+			return leftNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getleftkey(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getleftkey(key, currentNode->leftChild);
+		}
+	}
+
+	TreeNode  *_getrightkey(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *rightNode = currentNode->rightChild;
+			return rightNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getrightkey(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getrightkey(key, currentNode->leftChild);
+		}
+	}
+
 public:
 	BinarySearchTree() {
 		this->root = NULL;
@@ -273,6 +305,39 @@ public:
 			TreeNode *res = this->_getright(key, this->root);
 			if (res) {
 				return res->animal_name;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
+	int get_leftkey(int key) {
+		// New method we will use to get the left node
+		// We need to access the left child, and then call _get()
+		if (this->root) {
+			TreeNode *res = this->_getleftkey(key, this->root);
+			if (res) {
+				return res->key;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
+	int get_rightkey(int key) {
+		// New method we will use to get the right node
+		if (this->root) {
+			TreeNode *res = this->_getrightkey(key, this->root);
+			if (res) {
+				return res->key;
 			}
 			else {
 				return 0;
@@ -411,13 +476,30 @@ int main() {
 	cout << mytree << endl;
 	
 */
-	int num = 4;
-	string x = mytree->get(num);
-	string y = mytree->get_left(num);
-	string z = mytree->get_right(num);
-	cout << x << endl;
-	cout << y << endl;
-	cout << z << endl;
+	int key_num = 22;
+	string node = mytree->get(key_num);
+	string answer;
+	bool leaf = true;
+	vector <string> leaf_animals{"Zebra", "Flamingo", "Penguin","Rabbit", "Duck", "Squirrel", "Giraffe", "Shark", "Alligator", "Octopus", "Seal","Bald Eagle", "Stork","Panda", "Tiger"};
+	
+	while (leaf = true) {
+		//if(node in leaf_animals){
+		//stuff
+		cout << node << endl;
+		cin >> answer;
+		if (answer == "yes" || answer == "Yes") {
+			node = mytree->get_right(key_num);
+			key_num = mytree->get_rightkey(key_num);
+		}
+		else if (answer == "no" || answer == "No") {
+			node = mytree->get_left(key_num);
+			key_num = mytree->get_leftkey(key_num);
+		}
+
+	}
 	cin.get();
 	return 0;
 }
+
+	
+
