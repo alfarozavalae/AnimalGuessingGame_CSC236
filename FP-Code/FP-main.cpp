@@ -131,6 +131,15 @@ public:
 			this->rightChild->parent = this;
 		}
 	}
+	void preorder() {
+		cout << this->key << endl;
+		if (this->leftChild) {
+			this->leftChild->preorder();
+		}
+		if (this->rightChild) {
+			this->rightChild->preorder();
+		}
+	}
 };
 
 
@@ -174,6 +183,38 @@ private:
 		}
 	}
 
+	TreeNode  *_getleft(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *leftNode = currentNode->leftChild;
+			return leftNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getleft(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getleft(key, currentNode->leftChild);
+		}
+	}
+
+	TreeNode  *_getright(int key, TreeNode *currentNode) {
+		if (!currentNode) {
+			return NULL;
+		}
+		else if (currentNode->key == key) {
+			TreeNode *rightNode = currentNode->rightChild;
+			return rightNode;
+		}
+		else if (key > currentNode->key) {
+			return this->_getright(key, currentNode->rightChild);
+		}
+		else if (key < currentNode->key) {
+			return this->_getright(key, currentNode->leftChild);
+		}
+	}
+
 public:
 	BinarySearchTree() {
 		this->root = NULL;
@@ -208,6 +249,40 @@ public:
 			return 0;
 		}
 	}
+
+	string get_left(int key) {
+		// New method we will use to get the left node
+		// We need to access the left child, and then call _get()
+		if (this->root) {
+			TreeNode *res = this->_getleft(key, this->root);
+			if (res) {
+				return res->animal_name;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
+	string get_right(int key) {
+		// New method we will use to get the right node
+		if (this->root) {
+			TreeNode *res = this->_getright(key, this->root);
+			if (res) {
+				return res->animal_name;
+			}
+			else {
+				return 0;
+			}
+		}
+		else {
+			return 0;
+		}
+	}
+
 
 	void del(int key) {
 		if (this->size > 1) {
@@ -280,54 +355,69 @@ public:
 			}
 		}
 	}
+	
+	/*void preorder(){
+		root.preorder();
+			}
+	*/
 	void fill_tree(string questions_filename, string number_filename)
 	{
 		ifstream questions(questions_filename);
 		ifstream numbers(number_filename);
 		string line;
+		int readint;
 		int linecount = 0;
 		vector <string> questionvect;
 		vector <int> numbersvect;
-		int x = numbersvect.size();
+		//int x = numbersvect.size();
+		questionvect.reserve(32);
+		numbersvect.reserve(32);
 
 
-		questions.open(questions_filename);
-		numbers.open(number_filename);
 
-		if (!questions || !numbers) {
+		if (!questions.is_open() || !numbers.is_open()) {
 			cout << " Error opening file. " << endl;
 		}
-		while (getline(questions, line)) {// Reading file until the end is reached or an error occurs
-			for (unsigned int i = 0; i < line.length(); ++i) {
-				questionvect.push_back(line[i]);
-			}
+
+		for (unsigned int i = 0; i <= 31; ++i) {
+			getline(questions, line);
+			//cout << line << endl;
+			questionvect.push_back(line);
 		}
-		while (getline(numbers, line)) {// Reading file until the end is reached or an error occurs
-			for (unsigned int i = 0; i < line.length(); ++i) {
-				numbersvect.push_back(line[i]);
-			}
+
+		for (unsigned int i = 0; i <= 31; ++i) {
+			numbers >> readint;
+			//cout << readint << endl;
+			numbersvect.push_back(readint);
 		}
-		while (x != 0) {
-			int i = 0;
+
+		for (unsigned int i = 0; i <= 31; ++i) {
 			int num = numbersvect[i];
 			string ques = questionvect[i];
-			put(num, ques);
+			put(num, ques );
+		
 		}
+		questions.close();
+		numbers.close();
 	}
-
-
 };
 
 int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
-	mytree->put(3, "red");
-	mytree->put(4, "blue");
-	mytree->put(6, "yellow");
-	mytree->put(2, "at");
-
-	cout << mytree->get(6) << endl;
-	cout << mytree->get(2) << endl;
+	mytree->fill_tree("questions_filename.txt", "numbers_filename.txt");
+	//cout << mytree -> root << endl;
+	/*for (int i = 1, i < mytree.length, ++i);
+	cout << mytree << endl;
+	
+*/
+	int num = 4;
+	string x = mytree->get(num);
+	string y = mytree->get_left(num);
+	string z = mytree->get_right(num);
+	cout << x << endl;
+	cout << y << endl;
+	cout << z << endl;
 	cin.get();
 	return 0;
 }
