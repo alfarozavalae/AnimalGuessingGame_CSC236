@@ -290,10 +290,10 @@ public:
 		}
 	}
 	
-	void preorder(){
+	/*void preorder(){
 		root.preorder();
 			}
-	
+	*/
 	void fill_tree(string questions_filename, string number_filename)
 	{
 		ifstream questions(questions_filename);
