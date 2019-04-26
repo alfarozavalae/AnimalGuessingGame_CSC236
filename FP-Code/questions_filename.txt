@@ -1,5 +1,5 @@
 Does it fly?
-Does it live in the water?
+Does it spend a lot of time in the water?
 Is it an exotic animal?
 Is it popular on campus?
 Rabbit
@@ -17,7 +17,7 @@ Does it have legs?
 Shark
 Alligator
 Octopus
-Is it the main character from the movie “Happy Feet”?
+Is it the main character from the movie 'Happy Feet'?
 Seal
 Penguin
 Does it have long legs?
