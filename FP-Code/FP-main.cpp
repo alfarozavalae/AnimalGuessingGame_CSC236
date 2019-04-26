@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include "stdlib.h" // for the system command
+#include <algorithm>
 
 using namespace std;
 
@@ -471,35 +472,37 @@ int main() {
 
 	BinarySearchTree *mytree = new BinarySearchTree();
 	mytree->fill_tree("questions_filename.txt", "numbers_filename.txt");
-	//cout << mytree -> root << endl;
-	/*for (int i = 1, i < mytree.length, ++i);
-	cout << mytree << endl;
-	
-*/
+
+	char holdme;
 	int key_num = 22;
 	string node = mytree->get(key_num);
 	string answer;
 	bool leaf = true;
-	vector <string> leaf_animals{"Zebra", "Flamingo", "Penguin","Rabbit", "Duck", "Squirrel", "Giraffe", "Shark", "Alligator", "Octopus", "Seal","Bald Eagle", "Stork","Panda", "Tiger"};
-	
+	vector <string> leaf_animals{ "Zebra", "Flamingo", "Penguin","Rabbit", "Duck", "Squirrel", "Giraffe", "Shark", "Alligator", "Octopus", "Seal","Bald Eagle", "Stork?","Panda", "Tiger" };
+
 	while (leaf = true) {
-		//if(node in leaf_animals){
-		//stuff
+		if (find(leaf_animals.begin(), leaf_animals.end(), node) != leaf_animals.end()) {
+			cout << "element found" << endl;
+			leaf = false;
+			break;
+		}
 		cout << node << endl;
 		cin >> answer;
-		if (answer == "yes" || answer == "Yes") {
-			node = mytree->get_right(key_num);
-			key_num = mytree->get_rightkey(key_num);
+			if (answer == "yes" || answer == "Yes") {
+				node = mytree->get_right(key_num);
+				key_num = mytree->get_rightkey(key_num);
+			}
+			else if (answer == "no" || answer == "No") {
+				node = mytree->get_left(key_num);
+				key_num = mytree->get_leftkey(key_num);
+			}
 		}
-		else if (answer == "no" || answer == "No") {
-			node = mytree->get_left(key_num);
-			key_num = mytree->get_leftkey(key_num);
-		}
+	cout << "You're out" << endl;
 
-	}
+	cin >> holdme;
 	cin.get();
 	return 0;
-}
+	}
 
 	
 
